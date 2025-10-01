@@ -15,6 +15,8 @@ function loadChapter(chapter) {
       // Extract images from the fetched HTML content
       images = text.match(re);
 
+      document.querySelector(".selector").value = chapter;
+
       // Assuming you want to append these images to an element with id="image-container"
       const imageContainer = document.getElementById("image-container");
 
@@ -45,13 +47,29 @@ function loadChapter(chapter) {
 // Load the initial chapter
 loadChapter(chapter);
 
-// Add an event listener to the "Next" button to load the next chapter
-document.querySelector(".next").addEventListener("click", () => {
-  chapter++; // Increment the chapter number
-  loadChapter(chapter); // Load the next chapter
+const selectItem = document.querySelector(".selector");
+for (let i = 1; i <= 193; i++) {
+  let opt = document.createElement("option");
+  opt.innerText = i;
+  selectItem.appendChild(opt);
+}
+
+selectItem.addEventListener("change", () => {
+  chapter = selectItem.value;
+  loadChapter(chapter);
 });
 
-document.querySelector(".previous").addEventListener("click", () => {
-  chapter--; // Increment the chapter number
-  loadChapter(chapter); // Load the next chapter
-});
+// Add an event listener to the "Next" button to load the next chapter
+document.querySelectorAll(".next").forEach((n) =>
+  n.addEventListener("click", () => {
+    chapter++; // Increment the chapter number
+    loadChapter(chapter); // Load the next chapter
+  }),
+);
+
+document.querySelectorAll(".previous").forEach((n) =>
+  n.addEventListener("click", () => {
+    chapter--; // Increment the chapter number
+    loadChapter(chapter); // Load the next chapter
+  }),
+);
